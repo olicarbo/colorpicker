@@ -61,7 +61,13 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    CGRect frame = CGRectMake(130, 65, 100, 40);
+
+    if (self.selectedColorText.length != 0)
+    {
+        self.selectedColorLabel.text = self.selectedColorText;
+    }
+    
+    CGRect frame = CGRectMake(130, 16, 100, 40);
     UIImageView *checkeredView = [[UIImageView alloc] initWithFrame:frame];
     checkeredView.layer.cornerRadius = 6.0;
     checkeredView.layer.masksToBounds = YES;
@@ -69,7 +75,7 @@
     [self.view addSubview:checkeredView];
     
     CALayer *layer = [CALayer layer];
-    layer.frame = CGRectMake(130, 65, 100, 40);
+    layer.frame = CGRectMake(130, 16, 100, 40);
     layer.cornerRadius = 6.0;
     layer.shadowColor = [UIColor blackColor].CGColor;
     layer.shadowOffset = CGSizeMake(0, 2);
@@ -82,7 +88,7 @@
     int index = 0;
     for (int i = 0; i < 12; i++) {
         int colorCount = NEOColorPicker4InchDisplay() ? 32 : 24;
-        for (int x = 0; x < colorCount; x++) {
+        for (int x = 0; x < colorCount && index < self.hueColors.count; x++) {
             CALayer *layer = [CALayer layer];
             layer.cornerRadius = 6.0;
             UIColor *color = [self.hueColors objectAtIndex:index++];
@@ -124,9 +130,15 @@
     int column = (int)((delta - 8) / 78);
     int colorCount = NEOColorPicker4InchDisplay() ? 32 : 24;
     int index = colorCount * page + row * 4 + column;
-    self.selectedColor = [self.hueColors objectAtIndex:index];
-    self.selectedColorLayer.backgroundColor = self.selectedColor.CGColor;
-    [self.selectedColorLayer setNeedsDisplay];
+	if (index < self.hueColors.count) {
+		self.selectedColor = [self.hueColors objectAtIndex:index];
+		self.selectedColorLayer.backgroundColor = self.selectedColor.CGColor;
+		[self.selectedColorLayer setNeedsDisplay];
+
+		if ([self.delegate respondsToSelector:@selector(colorPickerViewController:didChangeColor:)]) {
+			[self.delegate colorPickerViewController:self didChangeColor:self.selectedColor];
+		}
+	}
 }
 
 
