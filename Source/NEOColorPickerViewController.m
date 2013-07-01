@@ -148,8 +148,12 @@
     int row = (int)((point.y - 8) / 48);
     int column = (int)((point.x - 8) / 78);
     int index = row * 4 + column;
-    self.selectedColor = [_colorArray objectAtIndex:index];
-    [self updateSelectedColor];
+    
+    if (index < [_colorArray count])
+    {
+        self.selectedColor = [_colorArray objectAtIndex:index];
+        [self updateSelectedColor];
+    }
 }
 
 
