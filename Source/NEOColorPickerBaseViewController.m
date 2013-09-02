@@ -100,6 +100,12 @@
     self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCancel target:self action:@selector(buttonPressCancel:)];
     self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone target:self action:@selector(buttonPressDone:)];
     self.contentSizeForViewInPopover = CGSizeMake(320.0f, 460.0f);
+    
+    if (IOS7)
+    {
+        self.view.backgroundColor = [UIColor whiteColor];
+        self.edgesForExtendedLayout = UIRectEdgeNone;
+    }
 }
 
 
