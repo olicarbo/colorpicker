@@ -101,7 +101,7 @@
     self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone target:self action:@selector(buttonPressDone:)];
     self.contentSizeForViewInPopover = CGSizeMake(320.0f, 460.0f);
     
-    if (IOS7)
+    if (([[[UIDevice currentDevice] systemVersion] compare:@"7.0" options:NSNumericSearch] != NSOrderedAscending))
     {
         self.view.backgroundColor = [UIColor whiteColor];
         self.edgesForExtendedLayout = UIRectEdgeNone;
